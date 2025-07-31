@@ -37,6 +37,7 @@ const GameScreen = ({ onComplete }) => {
 
   const handleObjectClick = useCallback((objectId, event) => {
     event.stopPropagation();
+    event.preventDefault(); // Prevent default touch behavior
     
     setGameObjects(prev => prev.filter(obj => obj.id !== objectId));
     setScore(prev => {
@@ -55,6 +56,10 @@ const GameScreen = ({ onComplete }) => {
       return newScore;
     });
   }, [onComplete, maxScore]);
+
+  const handleObjectTouch = useCallback((objectId, event) => {
+    handleObjectClick(objectId, event);
+  }, [handleObjectClick]);
 
   useEffect(() => {
     if (!gameActive) return;
