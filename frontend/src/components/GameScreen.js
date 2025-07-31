@@ -96,6 +96,8 @@ const GameScreen = ({ onComplete }) => {
           className="game-object"
           style={{ left: obj.x, top: obj.y }}
           onClick={(e) => handleObjectClick(obj.id, e)}
+          onTouchStart={(e) => handleObjectTouch(obj.id, e)}
+          onTouchEnd={(e) => e.preventDefault()}
         >
           {obj.emoji}
         </div>
