@@ -1,52 +1,87 @@
-import { useEffect } from "react";
-import "./App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import axios from "axios";
+import React, { useState, useEffect } from 'react';
+import './App.css';
+import LandingPage from './components/LandingPage';
+import GameScreen from './components/GameScreen';
+import StargazingScene from './components/StargazingScene';
+import EndingScreen from './components/EndingScreen';
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
+function App() {
+  const [currentScreen, setCurrentScreen] = useState('landing');
+  const [showCountdown, setShowCountdown] = useState(false);
+  const [countdown, setCountdown] = useState(3);
 
-const Home = () => {
-  const helloWorldApi = async () => {
-    try {
-      const response = await axios.get(`${API}/`);
-      console.log(response.data.message);
-    } catch (e) {
-      console.error(e, `errored out requesting / api`);
+  const handleStartGame = () => {
+    setShowCountdown(true);
+    
+    // Countdown animation
+    let count = 3;
+    const countdownInterval = setInterval(() => {
+      count--;
+      setCountdown(count);
+      
+      if (count === 0) {
+        clearInterval(countdownInterval);
+        setTimeout(() => {
+          setShowCountdown(false);
+          setCurrentScreen('game');
+        }, 1000);
+      }
+    }, 1000);
+  };
+
+  const handleGameComplete = () => {
+    setCurrentScreen('stargazing-question');
+  };
+
+  const handleStartStargazing = () => {
+    setCurrentScreen('stargazing');
+  };
+
+  const handleEndDate = () => {
+    setCurrentScreen('ending');
+  };
+
+  const renderScreen = () => {
+    if (showCountdown) {
+      return (
+        <div className="countdown-screen">
+          <div className="countdown-number">{countdown}</div>
+          {countdown === 0 && <div className="countdown-text">Let's Go!</div>}
+        </div>
+      );
+    }
+
+    switch (currentScreen) {
+      case 'landing':
+        return <LandingPage onStart={handleStartGame} />;
+      case 'game':
+        return <GameScreen onComplete={handleGameComplete} />;
+      case 'stargazing-question':
+        return (
+          <div className="stargazing-question">
+            <h2 className="question-text">Wanna do stargazing together?</h2>
+            <div className="question-buttons">
+              <button className="yes-btn" onClick={handleStartStargazing}>
+                Yes ❤️
+              </button>
+              <button className="no-btn">
+                No
+              </button>
+            </div>
+          </div>
+        );
+      case 'stargazing':
+        return <StargazingScene onEndDate={handleEndDate} />;
+      case 'ending':
+        return <EndingScreen />;
+      default:
+        return <LandingPage onStart={handleStartGame} />;
     }
   };
 
-  useEffect(() => {
-    helloWorldApi();
-  }, []);
-
-  return (
-    <div>
-      <header className="App-header">
-        <a
-          className="App-link"
-          href="https://emergent.sh"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <img src="https://avatars.githubusercontent.com/in/1201222?s=120&u=2686cf91179bbafbc7a71bfbc43004cf9ae1acea&v=4" />
-        </a>
-        <p className="mt-5">Building something incredible ~!</p>
-      </header>
-    </div>
-  );
-};
-
-function App() {
   return (
     <div className="App">
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />}>
-            <Route index element={<Home />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+      {renderScreen()}
     </div>
   );
 }

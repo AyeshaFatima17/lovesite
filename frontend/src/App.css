@@ -1,34 +1,147 @@
-.App-logo {
-    height: 40vmin;
-    pointer-events: none;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-    .App-logo {
-        animation: App-logo-spin infinite 20s linear;
-    }
+.App {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  font-family: 'Arial', sans-serif;
 }
 
-.App-header {
-    background-color: #0f0f10;
-    min-height: 100vh;
-    display: flex;
+/* Countdown Screen */
+.countdown-screen {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(ellipse at center, #ff69b4 0%, #ff1493 30%, #dc143c 60%, #8b0000 100%);
+  color: white;
+}
+
+.countdown-number {
+  font-size: 8rem;
+  font-weight: bold;
+  animation: countdownPulse 1s ease-in-out;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+}
+
+.countdown-text {
+  font-size: 3rem;
+  margin-top: 20px;
+  animation: fadeInUp 0.5s ease-out;
+}
+
+@keyframes countdownPulse {
+  0% { transform: scale(0.5); opacity: 0; }
+  50% { transform: scale(1.2); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from { transform: translateY(30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* Stargazing Question Screen */
+.stargazing-question {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(ellipse at center, #ff69b4 0%, #ff1493 30%, #dc143c 60%, #8b0000 100%);
+  color: white;
+  text-align: center;
+}
+
+.question-text {
+  font-size: 3rem;
+  margin-bottom: 50px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  animation: fadeIn 1s ease-in;
+}
+
+.question-buttons {
+  display: flex;
+  gap: 30px;
+}
+
+.yes-btn, .no-btn {
+  padding: 15px 40px;
+  font-size: 1.5rem;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: bold;
+}
+
+.yes-btn {
+  background: linear-gradient(45deg, #ff69b4, #ff1493);
+  color: white;
+  box-shadow: 0 5px 15px rgba(255, 20, 147, 0.4);
+}
+
+.yes-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(255, 20, 147, 0.6);
+}
+
+.no-btn {
+  background: linear-gradient(45deg, #666, #999);
+  color: white;
+  box-shadow: 0 5px 15px rgba(102, 102, 102, 0.4);
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.no-btn:hover,
+.no-btn:focus,
+.no-btn:active {
+  transform: translate(50px, 30px);
+  animation: wiggle 0.5s ease-in-out;
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: translate(50px, 30px) rotate(0deg); }
+  25% { transform: translate(45px, 25px) rotate(-5deg); }
+  75% { transform: translate(55px, 35px) rotate(5deg); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .countdown-number {
+    font-size: 6rem;
+  }
+  
+  .countdown-text {
+    font-size: 2rem;
+  }
+  
+  .question-text {
+    font-size: 2rem;
+    margin-bottom: 30px;
+    padding: 0 20px;
+  }
+  
+  .question-buttons {
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
-}
-
-.App-link {
-    color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
+    gap: 20px;
+  }
+  
+  .yes-btn, .no-btn {
+    padding: 12px 30px;
+    font-size: 1.2rem;
+  }
 }
