@@ -70,6 +70,11 @@
   transition: transform 0.1s ease;
   animation: sparkle 2s ease-in-out infinite;
   z-index: 10;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
 .game-object:hover {
@@ -77,6 +82,10 @@
 }
 
 .game-object:active {
+  transform: scale(0.9);
+}
+
+.game-object:touch {
   transform: scale(0.9);
 }
 
