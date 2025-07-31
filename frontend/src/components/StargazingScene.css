@@ -152,7 +152,7 @@
   bottom: 15%;
   left: 50%;
   transform: translateX(-50%);
-  animation: fadeInUp 1s ease-out;
+  animation: fadeInCenter 1s ease-out;
 }
 
 .end-date-btn {
