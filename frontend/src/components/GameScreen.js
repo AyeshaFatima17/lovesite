@@ -107,6 +107,7 @@ const GameScreen = ({ onComplete }) => {
       {gameObjects.length < 3 && gameActive && (
         <div className="game-instructions">
           <p>Tap the falling objects to fill the heart! ❤️</p>
+          <p className="mobile-hint">Touch & tap to collect! 📱</p>
         </div>
       )}
 
